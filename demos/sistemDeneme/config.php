@@ -1,0 +1,10 @@
+<?php
+	$mysql=array();
+	$mysql["site"]="localhost";
+	$mysql["kadi"]="root";
+	$mysql["sifre"]="";
+	$mysql["db"]="osmanlikitapevi";
+	$data["doc"]="http://localhost/colakMVCv1.0/demos/sistemdeneme/";
+	$data["file"]=__DIR__;
+	$data["site"]="http://localhost/colakMVCv1.0/demos/sistemdeneme";
+?>

@@ -1,0 +1,168 @@
+/* Bu CSS dökümaný Mustafa Çolakoðlu tarafýndan kodlanmýþtýr. */
+	body{
+
+	}
+		#genel{
+			width:90%;
+			height:auto;
+			float:none;
+			margin:0 auto;
+			overflow:auto;
+		}
+			header{
+				width:100%;
+				margin:0 auto;
+				float:none;
+				overflow:auto;
+				border-radius:10px;
+				border-top-left-radius:0;
+				border-top-right-radius:0;
+				background:#690;
+				z-index:999;
+			}
+				menu ul li{
+					width:auto;
+					margin-right:20px;
+				}
+					menu ul li a{
+						display:block;
+						padding:20px;
+						font:bold 20px Tahoma;
+						color:#cff;
+					}
+					menu ul li a:hover{
+						background:#030;
+						color:#9ff;
+					}
+				.baslik{
+					display:block;
+					color:#036;
+					float:right;
+					padding:20px;
+					font:bold 20px Tahoma;
+					background:#09c;
+				}
+				.baslik:hover{
+					background:#09f;
+				}
+			section{
+				width:100%;
+				min-height:400px;
+				background:#470;
+				margin-top:-20px;
+				padding-top:20px;
+				border-radius:10px;
+				z-index:888;
+			}
+				.karsilama{
+					font:bold 20px Arial;
+					float:none;
+					margin:0 auto;
+					width:300px;
+					color:#ccf;
+				}
+				.hata{
+					font:10px Arial;
+					padding:30px;
+					text-align:center;
+					letter-spacing:3px;
+					font-weight:bold;
+					color:#ddd;
+				}
+					.linki{
+						color:#922;
+					}
+				.uyari{
+					width:100%;
+					font:20px Arial;
+					padding-top:30px;
+					padding-bottom:30px;
+					text-align:center;
+					background:#f01;
+					text-align:center;
+					letter-spacing:3px;
+					font-weight:bold;
+					color:#ddd;
+					float:left;
+				}
+				.kurulumTablo{
+					width:auto;
+					margin:0 auto;
+					margin-top:20px;
+					margin-bottom:20px;
+					background:#360;
+					position:relative;
+					clear:both;
+				}
+					.kurulumTablo tr{
+						border:0;
+					}
+						.kurulumTablo tr td{
+							border:0;
+							padding:5px;
+							font:bold 15px Verdana;
+							color:#ddd;
+						}
+							.kurulumTablo tr td input[type="text"]{
+								height:30px;
+								width:200px;
+								padding-left:10px;
+								font:bold 15px Verdana;
+							}
+							.kurulumTablo tr td input[type="text"]:focus{
+								background:#380;
+							}
+							.kurulumTablo tr td input[type="submit"]{
+								height:30px;
+								cursor:pointer;
+								margin-right:10px;
+								width:100px;
+								text-align:center;
+								float:right;
+								padding-left:10px;
+								font:bold 15px Verdana;
+								background:#030;
+								color:#ddd;
+							}
+							.kurulumTablo tr td input[type="submit"]:hover{
+								background:#053;
+							}
+				.konular{
+					width:20%;
+					height:400px;
+					opacity:0.4;
+					background:#093;
+					border-bottom-left-radius:10px;
+					margin-top:-20px;
+					padding-top:20px; 
+					position:fixed;
+					transition:all 1s;
+				}
+				.konular:hover{
+					opacity:0.7;
+				}
+					.konular ul{
+						width:100%;
+					}
+					.konular ul li{
+						width:100%;
+					}
+						.konular ul li a{
+							display:block;
+							width:100%;
+							font:bold 15px Tahoma;
+							background:#093;
+							color:#fff;
+						}
+						.konular ul li a:hover{
+							color:#f00;
+						}
+			footer{
+				width:100%;
+				height:50px;
+				background:#121212;
+				margin-top:-20px;
+				padding-top:20px;
+				border-radius:10px;
+				z-index:777;
+			}
