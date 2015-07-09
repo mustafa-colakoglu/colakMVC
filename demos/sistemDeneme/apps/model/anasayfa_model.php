@@ -3,9 +3,8 @@
 		public function __construct(){
 			parent::__construct();
 		}
-		public function modelSec(){
-			$data=array();
-			$data["yazilar"]=$this->select("yazilar","","baslik","","yazilar","30");
+		public function modelSec($q){
+			$data["a"]=$this->select("ekle");
 			return $data;
 		}
 		public function __destruct(){

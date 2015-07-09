@@ -20,6 +20,23 @@
 			}
 			include "apps/view/".$dosya."_view.php";
 		}
+		public function controller($q){
+			$q=explode("/",$q);
+			if($q[0]==""){
+				include "apps/controller/anasayfa.php";
+				$controller=new anasayfa(array("anasayfa"));
+			}
+			else{
+				if(is_file("apps/controller/".$q[0].".php")){
+					include "apps/controller/".$q[0].".php";
+					$controller=new $q[0]($q);
+				}
+				else{
+					include "apps/controller/hata.php";
+					$controller=new hata();
+				}
+			}
+		}
 		public function plugin($plugin){
 			if(file_exists("plugins/".$plugin."_plugin.php")){
 				include "plugins/".$plugin."_plugin.php";

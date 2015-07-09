@@ -9,11 +9,17 @@
 	<?php
 		echo "Maker:".clk::maker."<br />";
 		echo "Version:".clk::version."<br />";
-		foreach($yazilar as $y){
-			extract($y);
-			echo $baslik."<br />";
+	?>
+	<form action="<?php echo clk::site(); ?>/redirect" method="post">
+		<input type="hidden" name="sayfa" value="arama" />
+		<input type="text" name="sda" value="aaa" /><br />
+		<input type="text" name="dsa" value="bbb" /><br />
+		<input type="submit" value="Gönder" />
+	</form>
+	<?php
+		foreach($a as $b){
+			echo $b["id"]."--".$b["text"]."<br />";
 		}
-		echo clk::canonical();
 	?>
 </body>
 </html>

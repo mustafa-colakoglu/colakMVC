@@ -1,5 +1,9 @@
 <?php
 	class ana{
+		private $mysqlSite;
+		private $mysqlKadi;
+		private $mysqlSifre;
+		private $mysqlDb;
 		const version="1.0";
 		const maker="Mustafa Çolakoğlu";
 		/*
@@ -7,10 +11,29 @@
 			Eğer eklenmezse siteyi Google gibi arama motorları anasayfasından başkasını indexlemez.
 			Eklenme şekli: <head><link rel="canonical" href="<?php echo clk::canonical(); ?>" /></head>
 		*/
-		static function &canonical(){
+		static function mysql($istenen){
+			include "config/system/mysql.php";
+			$mysqlSite=$mysql["site"];
+			$mysqlKadi=$mysql["kadi"];
+			$mysqlSifre=$mysql["sifre"];
+			$mysqlDb=$mysql["db"];
+			if($istenen=="site"){return $mysqlSite;}
+			else if($istenen=="kadi"){return $mysqlKadi;}
+			else if($istenen=="sifre"){return $mysqlSifre;}
+			else if($istenen=="db"){return $mysqlDb;}
+			
+		}
+		static function site(){
+			include "config/system/site.php";
+			return $data["site"];
+		}
+		static function doc(){
+			include "config/system/doc.php";
+			return $data["doc"];
+		}
+		static function canonical(){
 			global $q;
-			include "config.php";
-			$canonical=$data["site"].implode("/",$q);
+			$canonical=clk::site().implode("/",$q);
 			$canonical=clk::bulDegistir("//","/",$canonical);
 			return $canonical;
 		}
@@ -19,7 +42,7 @@
 			session başlatma.
 			token kontrol
 		*/
-		static function &baslangic(){
+		static function baslangic(){
 			session_start();
 			clk::token(1);
 			clk::filter();
@@ -27,7 +50,7 @@
 		/*
 			Bu kısım sitede veri güncellendiğinde tokeni günceller
 		*/
-		static function &bitis(){
+		static function bitis(){
 			clk::token(2);
 		}
 		/*
@@ -35,7 +58,7 @@
 			Kullanım şekli: <form action=""><input type="hidden" name="token" value="<?php echo $_SESSION["token"]; ?>" /></form>
 			Eğer formlara böyle eklenirse form işlemleri otomatik olarak saldırılardan korunucaktır.
 		*/
-		static function &token($islem){
+		static function token($islem){
 			if($islem==1){
 				if(@$_SESSION["token"]==""){
 					$_SESSION["token"]=md5(rand(1,9999));
@@ -65,7 +88,7 @@
 					clk::formVeriDuzelt($degiskeniniz);
 				şeklinde kullanılabilir.
 		*/
-		static function &formVeriDuzelt($degisken=false){
+		static function formVeriDuzelt($degisken=false){
 			if($degisken){
 				$degisken=ana::bulDegistir('"',"&#34",$degisken);
 				$degisken=ana::bulDegistir("%","&#37",$degisken);
@@ -123,7 +146,7 @@
 		/*
 			Bu kısım eğer dışardan gelinmişse devreye girer ve form verilerini temizleme fonksiyonlarını çalıştırır.
 		*/
-		static function &filter(){
+		static function filter(){
 			$gelen=@$_SERVER["HTTP_REFERER"];
 			include "config.php";
 			if($gelen!=""){
@@ -144,7 +167,7 @@
 				istediğimiz herhangi bir karakteri silmek için:
 					clk::temizle($id,"karakterin");
 		*/
-		static function &temizle($temizlenen,$belirli=false){
+		static function temizle($temizlenen,$belirli=false){
 			if($belirli==""){
 				$cikar="'".'";/.,*=-+abcçdefgğhıijklmnoöprsştuüvyzABCÇDEFGĞHIİJKLMNOÖPRSŞTUÜVYZ';
 			}
@@ -165,7 +188,7 @@
 				biz "aaa" ile "ccc" arasını almak istiyoruz
 				$yeni=clk::merl("aaa","bbb",$metin);
 		*/
-		static function &merl($baslanacak,$bitecek,$veri){
+		static function merl($baslanacak,$bitecek,$veri){
 			$al=0;
 			$yirmi=0;
 			$yeniVeri="";
@@ -186,7 +209,7 @@
 			return $yeniVeri;
 		}
 	var	$sayac=0;
-	static function &duzenle($yazi){
+	static function duzenle($yazi){
 			global $sayac;
 			$a=clk::merl("[LINK]","[/LINK]",$yazi);
 			$a=str_replace("[LINK]","",$a);
@@ -229,7 +252,7 @@
 		/*
 			Bu kısım bir metinden istediğimiz herhangi bir veriyi bulup değiştirmek için kullanılır
 		*/
-		static function &bulDegistir($bul,$degistir,$yazi){
+		static function bulDegistir($bul,$degistir,$yazi){
 			$yeni="";
 			for($i=0;$i<strlen($yazi);$i++){
 				if($bul==substr($yazi,$i,strlen($bul))){
@@ -249,7 +272,7 @@
 			Bu kısım cache dosyası var mı yok mu diye kontrol eder
 			varsa model dosyası yeni bir cache açmaz
 		*/
-		static function &cacheKontrol($file){
+		static function cacheKontrol($file){
 			include "config.php";
 			if(file_exists($data["file"]."/cache/".$file)){
 				include $data["file"]."/cache/".$file;
@@ -267,7 +290,7 @@
 		/*
 			Bu kısım cache dosyasına eklenicek verileri diziye çevirir
 		*/
-		static function &cacheDizi($dizi,$diziName){
+		static function cacheDizi($dizi,$diziName){
 			$ekle="";
 			foreach($dizi as $s){
 				$c="";
@@ -282,9 +305,9 @@
 			return array($ekle,$c);
 		}
 		/*
-			Bu kısım ise cache dosyasını oluturmamıza yarar.
+			Bu kısım cache dosyasını oluşturmamıza yarar.
 		*/
-		static function &cacheDosyaOlustur($dosyaAdi,$puts){
+		static function cacheDosyaOlustur($dosyaAdi,$puts){
 			$dosya=fopen($dosyaAdi,"w");
 			fputs($dosya,$puts);
 			fclose($dosya);
@@ -292,7 +315,7 @@
 		/*
 			Bu kısım herhangi bir saldırıya karşı her 10 dk da bir cache dosyalarını kontrol eder ve aynısından kaç tane varsa siler
 		*/
-		static function &cacheOnlem($cacheDosya){
+		static function cacheOnlem($cacheDosya){
 			include "config.php";
 			if(@file_exists($data["file"]."/system/sistemBilgi/cacheSecureTime.php")){
 				include $data["file"]."/system/sistemBilgi/cacheSecureTime.php";

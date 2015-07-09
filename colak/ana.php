@@ -1,5 +1,9 @@
 <?php
 	class ana{
+		private $mysqlSite;
+		private $mysqlKadi;
+		private $mysqlSifre;
+		private $mysqlDb;
 		const version="1.0";
 		const maker="Mustafa Çolakoğlu";
 		/*
@@ -7,10 +11,34 @@
 			Eğer eklenmezse siteyi Google gibi arama motorları anasayfasından başkasını indexlemez.
 			Eklenme şekli: <head><link rel="canonical" href="<?php echo clk::canonical(); ?>" /></head>
 		*/
-		public function canonical(){
+		static function mysql($istenen){
+			include "config/system/mysql.php";
+			$mysqlSite=$mysql["site"];
+			$mysqlKadi=$mysql["kadi"];
+			$mysqlSifre=$mysql["sifre"];
+			$mysqlDb=$mysql["db"];
+			if($istenen=="site"){return $mysqlSite;}
+			else if($istenen=="kadi"){return $mysqlKadi;}
+			else if($istenen=="sifre"){return $mysqlSifre;}
+			else if($istenen=="db"){return $mysqlDb;}
+			
+		}
+		static function site(){
+			include "config/system/site.php";
+			return $data["site"];
+		}
+		static function doc(){
+			include "config/system/doc.php";
+			return $data["doc"];
+		}
+		static function file(){
+			$file=__DIR__;
+			$file=rtrim($file,"\colak")."/";
+			return $file;
+		}
+		static function canonical(){
 			global $q;
-			include "config.php";
-			$canonical=$data["site"].implode("/",$q);
+			$canonical=clk::site().implode("/",$q);
 			$canonical=clk::bulDegistir("//","/",$canonical);
 			return $canonical;
 		}
@@ -125,7 +153,7 @@
 		*/
 		static function filter(){
 			$gelen=@$_SERVER["HTTP_REFERER"];
-			include "config.php";
+			include "config/system/site.php";
 			if($gelen!=""){
 				if($_POST || $_GET){
 					if(substr($gelen,0,strlen($data["site"]))==$data["site"]){}
@@ -250,10 +278,10 @@
 			varsa model dosyası yeni bir cache açmaz
 		*/
 		static function cacheKontrol($file){
-			include "config.php";
+			include "file.php";
 			if(file_exists($data["file"]."/cache/".$file)){
 				include $data["file"]."/cache/".$file;
-				if($time+$cacheTime<=time()){
+				if(time()+$cacheTime<=time()){
 					return false;
 				}
 				else{
@@ -282,7 +310,7 @@
 			return array($ekle,$c);
 		}
 		/*
-			Bu kısım ise cache dosyasını oluturmamıza yarar.
+			Bu kısım cache dosyasını oluşturmamıza yarar.
 		*/
 		static function cacheDosyaOlustur($dosyaAdi,$puts){
 			$dosya=fopen($dosyaAdi,"w");
@@ -293,32 +321,32 @@
 			Bu kısım herhangi bir saldırıya karşı her 10 dk da bir cache dosyalarını kontrol eder ve aynısından kaç tane varsa siler
 		*/
 		static function cacheOnlem($cacheDosya){
-			include "config.php";
-			if(@file_exists($data["file"]."/system/sistemBilgi/cacheSecureTime.php")){
-				include $data["file"]."/system/sistemBilgi/cacheSecureTime.php";
+			include "file.php";
+			if(@file_exists($data["file"]."../system/sistemBilgi/cacheSecureTime.php")){
+				include $data["file"]."../system/sistemBilgi/cacheSecureTime.php";
 				/* Kontrol Kısmı */
 				$kontrol=time();
 				if($sonZaman+18000>=$kontrol){
-					$dosya=fopen($data["file"]."/system/sistemBilgi/cacheSecureTime.php","w");
+					$dosya=fopen($data["file"]."../system/sistemBilgi/cacheSecureTime.php","w");
 					fputs($dosya,"<?php
 	$"."sonZaman=".time().";
 ?>");
 					fclose($dosya);
 				}else{
-					$ac1=opendir($data["file"]."/cache");
+					$ac1=opendir($data["file"]."../cache");
 					while($dosya1=readdir($ac1)){
 						if($dosya1=="." || $dosya1==".."){}
 						else{
-							$ac2=opendir($data["file"]."/cache");
+							$ac2=opendir($data["file"]."../cache");
 							while($dosya2=readdir($ac2)){
 								if($dosya2=="." || $dosya2==".." || $dosya2==$dosya1){}
 								else{
-									@include $data["file"]."/cache/".$dosya1;
+									@include $data["file"]."../cache/".$dosya1;
 									$data1=$data;
-									@include $data["file"]."/cache/".$dosya2;
+									@include $data["file"]."../cache/".$dosya2;
 									$data2=$data;
 									if($data1==$data2 && $dosya1!=$cacheDosya){
-										@unlink($data["file"]."/cache/".$dosya1);
+										@unlink($data["file"]."../cache/".$dosya1);
 									}
 									else{}
 								}
@@ -328,7 +356,7 @@
 				}
 			}
 			else{
-				$dosya=fopen($data["file"]."/system/sistemBilgi/cacheSecureTime.php","w");
+				$dosya=fopen($data["file"]."../system/sistemBilgi/cacheSecureTime.php","w");
 				fputs($dosya,"<?php
 	$"."sonZaman=".time().";
 ?>");

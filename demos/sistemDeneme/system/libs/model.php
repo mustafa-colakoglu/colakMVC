@@ -2,7 +2,7 @@
 	class model extends PDO{
 		public function __construct(){
 			include "config.php";
-			$db=parent::__construct("mysql:host=".$mysql["site"].";dbname=".$mysql["db"],$mysql["kadi"],$mysql["sifre"]);
+			$db=parent::__construct("mysql:host=".clk::mysql("site").";dbname=".clk::mysql("db"),clk::mysql("kadi"),clk::mysql("sifre"));
 		}
 		public function select($tablo,$where=false,$satir=false,$diger=false,$cacheName=false,$cacheTime=false){
 			global $q;
@@ -76,7 +76,7 @@
 				return $this->query($sql);
 			}else{}
 		}
-		public function update($tablo,$set,$where=false){
+		public function update($tablo,$set,$where=false,$diger=false){
 			if($where){
 				$sql="UPDATE ".$tablo." SET ".$set." WHERE ".$where;
 			}

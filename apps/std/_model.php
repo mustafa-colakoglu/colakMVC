@@ -5,7 +5,6 @@
 		}
 		public function veriler($q){
 			$data=array();
-			include "config.php";
 			$data["yazilar"]=$this->select("yazilar","","baslik","","yazilar","30");
 			return $data;
 		}

@@ -1,6 +1,6 @@
 <?php
-	class tags{
-		public function tags($tag,$ic){
+	class tag{
+		public function tag($tag,$ic){
 			echo "<".$tag.">".$ic."</".$tag.">";
 		}
 	}

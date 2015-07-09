@@ -5,7 +5,6 @@
 		}
 		public function modelSec($q){
 			$data=array();
-			include "config.php";
 			return $data;
 		}
 		public function __destruct(){

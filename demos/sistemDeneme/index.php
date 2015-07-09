@@ -8,7 +8,6 @@
 	include "colak/ana.php";#fonksiyonlarımızın bulunduğu class ımızı include ettik
 	include "system/libs/colak.php";#clk class
 	include "system/libs/load.php";#yükleme class ımızı include ettik
-	include "colak/tag.php";#tag class ı
 	include "system/libs/controller.php";#yönlendirici class ımızı include ettik
 	include "system/libs/model.php";#veritabanı işlemlerini yapacağımız class ımızı include ettik
 	# / sistem ana dosyaları

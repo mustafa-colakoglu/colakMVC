@@ -11,6 +11,8 @@
 		}
 		public function model($dosya){
 			include "apps/model/".$dosya."_model.php";
+			$className=$dosya."Model";
+			return new $className();
 		}
 		public function view($dosya,$data=false){
 			if($data){
