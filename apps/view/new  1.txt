@@ -1,4 +1,0 @@
-sudo su->root olmak
-sudo nautilus->root olmak
-sudo apt-get install aircrack-ng ->>wifi hacklemek için dene
-suro chmod 777 /klasor->düzenlme izni
